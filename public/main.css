@@ -1,0 +1,86 @@
+:root{
+    font-family: 'Roboto Mono', monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 4rem;
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.input {
+    display: inline-block;
+    padding: 10px;
+    font-size: 1.5rem;
+    width: 80%;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-weight: bold;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    width: 18%;
+    border: none;
+    background-color: blue;
+    color: #fff;
+}
+
+.tasks {
+    margin-top: 25px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.task {
+    padding: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-bottom: 1px dotted #ccc;
+}
+
+.task:last-child {
+    border-bottom: none;
+}
+
+.task:hover {
+    background: #eee;
+}
+
+.error,
+.success {
+    text-align: center;
+    font-size: 1.4rem;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 16px;
+}
+
+.error {
+    color: red;
+    border-color: red;
+}
+
+.success {
+    color: green;
+    border-color: green;
+}

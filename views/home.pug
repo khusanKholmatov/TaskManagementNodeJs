@@ -1,0 +1,21 @@
+extends layout.pug
+
+block number1
+    if error
+        p.error Please fill the input
+    
+    if success
+        p.success Good job
+
+    form.form(action='/add' method='POST')
+        input.input(type='text' placeholder='Add Task here...' name='task')
+        button.btn Add
+
+    div.tasks
+        if tasks.length
+            each task in tasks
+                p.task #{ task.task_description }
+        else
+            p.task No available task...
+
+            
