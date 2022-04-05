@@ -52,6 +52,9 @@
 }
 
 .task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px;
     font-size: 1.5rem;
     font-weight: bold;
@@ -83,4 +86,22 @@
 .success {
     color: green;
     border-color: green;
+}
+
+.delete {
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 5px;
+    background: tomato;
+    color: #fff;
+}
+
+.done,
+.undone {
+    text-decoration: none;
+    color: black;
+}
+
+.done {
+    text-decoration: line-through;
 }

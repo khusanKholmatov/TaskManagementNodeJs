@@ -7,6 +7,9 @@ block number1
     if success
         p.success Good job
 
+    if deleted
+        p.success Deleted!
+
     form.form(action='/add' method='POST')
         input.input(type='text' placeholder='Add Task here...' name='task')
         button.btn Add
@@ -14,7 +17,12 @@ block number1
     div.tasks
         if tasks.length
             each task in tasks
-                p.task #{ task.task_description }
+                p.task
+                    if task.done
+                        a.done(href=`/${task.id}/update`) #{ task.task_description }
+                    else
+                        a.undone(href=`/${task.id}/update`) #{ task.task_description }   
+                    a.delete(href=`/${ task.id }/delete`) Delete
         else
             p.task No available task...
 

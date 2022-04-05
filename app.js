@@ -63,6 +63,48 @@ app.post('/add', (req, res) =>{
     }
 })
 
+app.get('/:id/delete', (req, res) => {
+    const id = req.params.id
+
+    fs.readFile('./data/tasks.json', (err, data) => {
+        if (err) throw err
+
+        const tasks = JSON.parse(data)
+
+        const filteredTasks = tasks.filter(task => task.id != id)
+
+        fs.writeFile('./data/tasks.json', JSON.stringify(filteredTasks), (err) => {
+            if (err) throw err
+
+            res.render('home', { tasks: filteredTasks, deleted : true })
+        })
+    })
+})
+
+app.get('/:id/update', (req, res) => {
+    const id = req.params.id
+
+    fs.readFile('./data/tasks.json', (err, data) => {
+        if (err) throw err
+
+        const tasks = JSON.parse(data)
+        const task = tasks.filter(task => task.id == id)[0]
+
+        const taskIdX = tasks.indexOf(task)
+        const splicedTask = tasks.splice(taskIdX, 1)[0]
+
+        splicedTask.done = true
+
+        tasks.push(splicedTask)
+
+        fs.writeFile('./data/tasks.json', JSON.stringify(tasks), (err) => {
+            if (err) throw err
+
+            res.render('home', { tasks : tasks})
+        })
+    })
+})
+
 
 app.listen(PORT, (err) => {
     if (err) throw err
