@@ -27,4 +27,4 @@ node app
 https://github.com/khusanKholmatov/TaskManagementNodeJs.git
 
 #### Link to application on Glitch
-https://pentagonal-mountain-fiction.glitch.me
+https://rainy-sepia-transport.glitch.me/
