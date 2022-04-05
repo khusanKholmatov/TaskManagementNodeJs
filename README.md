@@ -24,4 +24,7 @@ node app
 - pug
 
 #### Link to GitHub repo
-[url to github repo]
+https://github.com/khusanKholmatov/TaskManagementNodeJs.git
+
+#### Link to application on Glitch
+https://pentagonal-mountain-fiction.glitch.me
