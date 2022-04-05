@@ -22,14 +22,15 @@
 .form {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
 }
 
 .input {
     display: inline-block;
     padding: 10px;
     font-size: 1.5rem;
-    width: 80%;
+    width: 100%;
     border: 1px solid #ccc;
     font-family: inherit;
     font-weight: bold;
@@ -40,33 +41,62 @@
     padding: 10px 20px;
     font-size: 1.5rem;
     width: 18%;
+    margin-left: 82%;
     border: none;
-    background-color: blue;
+    background-color:green;
     color: #fff;
 }
 
-.tasks {
+.btn:hover {
+    background-color: #0BB639;
+}
+
+.allTasks {
+    display: flex;
+    flex-direction: row;
+    height: 40vh;
+    margin: auto;
+}
+
+.tasks,
+.compTasks {
     margin-top: 25px;
+    margin-bottom: 5px;
     border: 1px solid #ccc;
     padding: 10px;
+    overflow-y: auto;
+    width: 55vh;
+    border-bottom: 1px dotted black;
 }
 
 .task {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
     padding: 10px;
+    white-space: inherit;
+    overflow: scroll;
     font-size: 1.5rem;
-    font-weight: bold;
-    border-bottom: 1px dotted #ccc;
+    font-weight: 500;
+    width: 24vw;
+}
+
+
+.header {
+    font-weight: bolder;
+    text-align: center;
+}
+
+.comp-task {
+    background-color: #EBCE12;
+}
+
+.uncomp-task {
+    background-color: lightgreen;
 }
 
 .task:last-child {
     border-bottom: none;
-}
-
-.task:hover {
-    background: #eee;
 }
 
 .error,
@@ -88,12 +118,18 @@
     border-color: green;
 }
 
-.delete {
+.delete,
+.update {
     text-decoration: none;
     font-size: 1rem;
     padding: 5px;
+    margin-left: 5px;
     background: tomato;
     color: #fff;
+}
+
+.btns:hover {
+    background-color: darkgrey;
 }
 
 .done,
@@ -102,6 +138,10 @@
     color: black;
 }
 
-.done {
+.undone {
     text-decoration: line-through;
+}
+
+.buttons {
+    float: right;
 }

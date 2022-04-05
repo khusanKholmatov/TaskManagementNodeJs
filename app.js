@@ -17,22 +17,24 @@ app.get('/', (req, res) => {
     fs.readFile('./data/tasks.json', (err, data)=>{
         if (err) throw err
 
-        const tasks = JSON.parse(data)
-
-        res.render('home', { tasks: tasks})
+        const allTasks = JSON.parse(data)
+        const tasks = allTasks.filter(task => !task.done)
+        const compTasks = allTasks.filter(task => task.done)
+        res.render('home', { error : true, tasks : tasks, compTasks : compTasks})
     })
 })
 
 app.post('/add', (req, res) =>{
     const formData  = req.body
 
-    if (formData.task.trim() == '') {
+    if (formData.task.trim() == '' || formData.taskDesc.trim() == '') {
         fs.readFile('./data/tasks.json', (err, data)=>{
             if (err) throw err
 
-            const tasks = JSON.parse(data)
-
-            res.render('home', { error : true, tasks : tasks})
+            const allTasks = JSON.parse(data)
+            const tasks = allTasks.filter(task => !task.done)
+            const compTasks = allTasks.filter(task => task.done)
+            res.render('home', { error : true, tasks : tasks, compTasks : compTasks})
         })
     }else{
         fs.readFile('./data/tasks.json', (err, data) =>{
@@ -42,7 +44,8 @@ app.post('/add', (req, res) =>{
 
             const task = {
                 id: id(),
-                task_description: formData.task,
+                task_title: formData.task,
+                task_description: formData.taskDesc,
                 done: false 
             }
 
@@ -54,9 +57,10 @@ app.post('/add', (req, res) =>{
                 fs.readFile('./data/tasks.json', (err, data)=>{
                     if (err) throw err
 
-                    const tasks = JSON.parse(data)
-
-                    res.render('home', { success : true, tasks : tasks})
+                    const allTasks = JSON.parse(data)
+                    const tasks = allTasks.filter(task => !task.done)
+                    const compTasks = allTasks.filter(task => task.done)
+                    res.render('home', { success : true, tasks : tasks, compTasks : compTasks})
                 })
             })
         })
@@ -69,14 +73,17 @@ app.get('/:id/delete', (req, res) => {
     fs.readFile('./data/tasks.json', (err, data) => {
         if (err) throw err
 
-        const tasks = JSON.parse(data)
+        const allTasks = JSON.parse(data)
 
-        const filteredTasks = tasks.filter(task => task.id != id)
+        const filteredTasks = allTasks.filter(task => task.id != id)
 
         fs.writeFile('./data/tasks.json', JSON.stringify(filteredTasks), (err) => {
             if (err) throw err
+            
+            const tasks = filteredTasks.filter(task => !task.done)
+            const compTasks = filteredTasks.filter(task => task.done)
 
-            res.render('home', { tasks: filteredTasks, deleted : true })
+            res.render('home', { deleted : true, tasks : tasks, compTasks : compTasks})
         })
     })
 })
@@ -87,20 +94,41 @@ app.get('/:id/update', (req, res) => {
     fs.readFile('./data/tasks.json', (err, data) => {
         if (err) throw err
 
-        const tasks = JSON.parse(data)
-        const task = tasks.filter(task => task.id == id)[0]
+        const allTasks = JSON.parse(data)
+        const task = allTasks.filter(task => task.id == id)[0]
 
-        const taskIdX = tasks.indexOf(task)
-        const splicedTask = tasks.splice(taskIdX, 1)[0]
+        const taskIdX = allTasks.indexOf(task)
+        const splicedTask = allTasks.splice(taskIdX, 1)[0]
 
-        splicedTask.done = true
+        splicedTask.done = !splicedTask.done
 
-        tasks.push(splicedTask)
+        allTasks.push(splicedTask)
 
-        fs.writeFile('./data/tasks.json', JSON.stringify(tasks), (err) => {
+        fs.writeFile('./data/tasks.json', JSON.stringify(allTasks), (err) => {
             if (err) throw err
+            
+            const tasks = allTasks.filter(task => !task.done)
+            const compTasks = allTasks.filter(task => task.done)
+            res.render('home', { success : true, tasks : tasks, compTasks : compTasks})
+        })
+    })
+})
 
-            res.render('home', { tasks : tasks})
+app.get('/clearAll', (req, res) => {
+    fs.readFile('./data/tasks.json', (err, data) => {
+        if (err) throw err
+
+        const allTasks = JSON.parse(data)
+
+        const filteredTasks = allTasks.filter(task => !task.done)
+
+        fs.writeFile('./data/tasks.json', JSON.stringify(filteredTasks), (err) => {
+            if (err) throw err
+            
+            const tasks = filteredTasks.filter(task => !task.done)
+            const compTasks = filteredTasks.filter(task => task.done)
+
+            res.render('home', { deleted : true, tasks : tasks, compTasks : compTasks})
         })
     })
 })

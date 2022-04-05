@@ -11,19 +11,45 @@ block number1
         p.success Deleted!
 
     form.form(action='/add' method='POST')
-        input.input(type='text' placeholder='Add Task here...' name='task')
+        input.input.task-title(type='text' placeholder='Add Task Title..' name='task')
+        input.input.task-description(type='text' placeholder='Add Task description ... ' name='taskDesc')
         button.btn Add
 
-    div.tasks
-        if tasks.length
-            each task in tasks
-                p.task
-                    if task.done
-                        a.done(href=`/${task.id}/update`) #{ task.task_description }
-                    else
-                        a.undone(href=`/${task.id}/update`) #{ task.task_description }   
-                    a.delete(href=`/${ task.id }/delete`) Delete
-        else
-            p.task No available task...
+    div.allTasks
+        div.tasks
+            if tasks.length
+                each task in tasks
+                    div.task.comp-task
+                        div.header
+                            p #{ task.task_title }
+                        p.para #{ task.task_description }    
+                    div.buttons
+                        a.update(href=`/${ task.id }/update`) Complete
+                        a.delete(href=`/${ task.id }/delete`) Delete
+                    
+            else
+                p.task No available task...
+
+        div.compTasks
+            if compTasks.length
+                each task in compTasks
+                    div.task.uncomp-task
+                        div.header
+                            p #{ task.task_title }
+                        p.para #{ task.task_description } 
+                    div.buttons
+                        a.update.btns(href=`/${ task.id }/update`) Incomplete
+                        a.delete.btns(href=`/${ task.id }/delete`) Delete
+            else
+                p.task No completed task...
+
+    form.form(action='/clearAll' method='DELETE')
+        button.clear.btn Clear completed
+
+
+
+
+
+        
 
             
